@@ -11,10 +11,12 @@ export interface Project {
   description: string;
   image?: string;
   tags: string[];
-  category: 'web' | 'mobile' | 'desktop';
+  category: 'web' | 'mobile' | 'desktop' | 'ml';
   demoUrl?: string;
   githubUrl?: string;
   videoUrl?: string;
+  downloadUrl?: string;
+  websiteUrl?: string;
 }
 
 export interface Skill {

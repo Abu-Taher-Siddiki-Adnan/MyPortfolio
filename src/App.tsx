@@ -31,8 +31,8 @@ function FadeInSection({ children }: FadeInSectionProps) {
       },
       {
         threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
-      }
+        rootMargin: "0px 0px -50px 0px",
+      },
     );
 
     const currentRef = domRef.current;
@@ -75,7 +75,7 @@ export default function App() {
   }>({
     isOpen: false,
     projectId: "",
-    title: ""
+    title: "",
   });
 
   // Track scroll position to update active section in the Navbar
@@ -105,7 +105,7 @@ export default function App() {
     setModalState({
       isOpen: true,
       projectId,
-      title
+      title,
     });
   };
 
@@ -143,21 +143,19 @@ export default function App() {
       <footer className="bg-[#020617] border-t border-slate-800 mt-20 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-center py-8 px-6 max-w-7xl mx-auto">
           <div className="font-extrabold tracking-wider text-indigo-400 text-sm uppercase font-mono">
-            {PORTFOLIO_OWNER.name}.
+            {PORTFOLIO_OWNER.name}
           </div>
-          <p className="text-sm text-slate-400 mt-4 md:mt-0 font-medium">
-            © {new Date().getFullYear()} {PORTFOLIO_OWNER.name}. Built with Digital Alchemy.
-          </p>
+          
           <div className="flex gap-6 mt-4 md:mt-0 text-sm font-medium">
-            <a 
-              href="#home" 
+            <a
+              href="#home"
               id="footer-privacy"
               className="text-slate-400 hover:text-indigo-400 transition-colors"
             >
               Privacy Policy
             </a>
-            <a 
-              href="#home" 
+            <a
+              href="#home"
               id="footer-terms"
               className="text-slate-400 hover:text-indigo-400 transition-colors"
             >
@@ -171,7 +169,7 @@ export default function App() {
       <AIChatbot />
 
       {/* Interactive Project Video Walkthrough Modal */}
-      <ProjectModal 
+      <ProjectModal
         isOpen={modalState.isOpen}
         projectId={modalState.projectId}
         title={modalState.title}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ExternalLink, Code, Github } from "lucide-react";
+import { ExternalLink, Code, Github, Globe, DownloadCloud, Youtube } from "lucide-react";
 import { PROJECTS_DATA } from "../data";
 import { Project } from "../types";
 
@@ -8,12 +8,19 @@ interface ProjectsProps {
 }
 
 export default function Projects({ onOpenDemo }: ProjectsProps) {
-  const [activeFilter, setActiveFilter] = useState<"all" | "web" | "mobile">("all");
+  const [activeFilter, setActiveFilter] = useState<"all" | "web" | "mobile" | "desktop" | "ml">("all");
+
+  const categoryOptions = [
+    "all",
+    ...Array.from(new Set(PROJECTS_DATA.map((project) => project.category)))
+  ];
 
   const filteredProjects = PROJECTS_DATA.filter((project) => {
     if (activeFilter === "all") return true;
     return project.category === activeFilter;
   });
+
+  const projectsToShow = activeFilter === "all" ? PROJECTS_DATA.slice(0, 6) : filteredProjects;
 
   return (
     <section id="projects" className="py-24 px-6 max-w-7xl mx-auto relative z-10">
@@ -27,11 +34,11 @@ export default function Projects({ onOpenDemo }: ProjectsProps) {
 
         {/* Dynamic Category Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {["all", "web", "mobile"].map((filter) => (
+          {categoryOptions.map((filter) => (
             <button
               key={filter}
               id={`filter-${filter}`}
-              onClick={() => setActiveFilter(filter as any)}
+              onClick={() => setActiveFilter(filter as "all" | "web" | "mobile" | "desktop" | "ml")}
               className={`px-6 py-2 rounded-full border cursor-pointer uppercase text-xs font-bold tracking-wider transition-all duration-300 ${
                 activeFilter === filter
                   ? "bg-indigo-500 text-white border-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.4)]"
@@ -46,7 +53,7 @@ export default function Projects({ onOpenDemo }: ProjectsProps) {
 
       {/* Projects Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredProjects.map((project) => (
+        {projectsToShow.map((project) => (
           <div
             key={project.id}
             id={`project-card-${project.id}`}
@@ -96,18 +103,52 @@ export default function Projects({ onOpenDemo }: ProjectsProps) {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex justify-between items-center mt-auto pt-4 border-t border-slate-800/60">
+              <div className="flex flex-wrap gap-3 items-center mt-auto pt-4 border-t border-slate-800/60">
+                {project.videoUrl && (
+                  <a
+                    href={project.videoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-4 py-2 text-slate-300 text-xs font-semibold uppercase tracking-wider hover:border-indigo-500 hover:text-white transition-all"
+                  >
+                    <Youtube className="w-4 h-4" />
+                    Watch
+                  </a>
+                )}
+
                 {project.demoUrl ? (
                   <button
                     onClick={() => onOpenDemo(project.id, project.title)}
                     id={`project-demo-btn-${project.id}`}
-                    className="text-indigo-400 font-bold flex items-center gap-1.5 hover:gap-2.5 hover:text-indigo-300 transition-all cursor-pointer text-sm"
+                    className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-4 py-2 text-indigo-400 text-xs font-bold uppercase tracking-wider hover:border-indigo-500 hover:text-white hover:bg-indigo-500/10 transition-all"
                   >
-                    Demo 
                     <ExternalLink className="w-4 h-4" />
+                    Live
                   </button>
-                ) : (
-                  <span className="text-slate-500 text-sm font-medium">Concept Only</span>
+                ) : null}
+
+                {project.websiteUrl && (
+                  <a
+                    href={project.websiteUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-4 py-2 text-slate-300 text-xs font-semibold uppercase tracking-wider hover:border-indigo-500 hover:text-white transition-all"
+                  >
+                    <Globe className="w-4 h-4" />
+                    Visit
+                  </a>
+                )}
+
+                {project.downloadUrl && (
+                  <a
+                    href={project.downloadUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-slate-700 px-4 py-2 text-slate-300 text-xs font-semibold uppercase tracking-wider hover:border-indigo-500 hover:text-white transition-all"
+                  >
+                    <DownloadCloud className="w-4 h-4" />
+                    Download
+                  </a>
                 )}
 
                 {project.githubUrl && (
@@ -116,11 +157,15 @@ export default function Projects({ onOpenDemo }: ProjectsProps) {
                     target="_blank"
                     rel="noreferrer"
                     id={`project-github-link-${project.id}`}
-                    className="text-slate-400 hover:text-indigo-400 transition-colors cursor-pointer"
+                    className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-slate-950 border border-slate-800 text-slate-400 hover:text-indigo-400 transition-colors"
                     aria-label={`View ${project.title} on GitHub`}
                   >
                     <Github className="w-5 h-5" />
                   </a>
+                )}
+
+                {!project.demoUrl && !project.videoUrl && !project.websiteUrl && !project.downloadUrl && !project.githubUrl && (
+                  <span className="text-slate-500 text-sm font-medium">Concept Only</span>
                 )}
               </div>
             </div>

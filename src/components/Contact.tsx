@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Mail, MapPin, Linkedin, Github, Facebook, Youtube, CheckCircle } from "lucide-react";
 import { PORTFOLIO_OWNER } from "../data";
-import emailjs from "@emailjs/browser";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -14,60 +13,55 @@ export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (!submitted) return;
+
+    const timer = window.setTimeout(() => {
+      setSubmitted(false);
+    }, 3500);
+
+    return () => window.clearTimeout(timer);
+  }, [submitted]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
 
-    const serviceId = (import.meta as any).env.VITE_EMAILJS_SERVICE_ID;
-    const templateId = (import.meta as any).env.VITE_EMAILJS_TEMPLATE_ID;
-    const publicKey = (import.meta as any).env.VITE_EMAILJS_PUBLIC_KEY;
-
     setIsSubmitting(true);
     setErrorMsg(null);
 
-    // Guard checking if public keys exist before trying to connect
-    if (!serviceId || !templateId || !publicKey) {
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setErrorMsg(
-          "EmailJS keys are missing from the environment configuration. Please set VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY in your settings to connect the form."
-        );
-      }, 800);
-      return;
-    }
-
     try {
-      await emailjs.send(
-        serviceId,
-        templateId,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          subject: formData.subject || "Portfolio Inquiry",
-          message: formData.message,
-          to_name: PORTFOLIO_OWNER.name,
-        },
-        publicKey
-      );
+      const formPayload = new FormData();
+      formPayload.append("name", formData.name);
+      formPayload.append("email", formData.email);
+      formPayload.append("_subject", formData.subject || "Portfolio Inquiry");
+      formPayload.append("message", formData.message);
 
-      setIsSubmitting(false);
+      const response = await fetch("https://formspree.io/f/mrewvzrw", {
+        method: "POST",
+        headers: {
+          Accept: "application/json"
+        },
+        body: formPayload
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => null);
+        throw new Error(errorData?.error || "Failed to send message.");
+      }
+
       setSubmitted(true);
       setFormData({ name: "", email: "", subject: "", message: "" });
-      // Reset success state after a few seconds
-      setTimeout(() => setSubmitted(false), 6000);
-    } catch (err: any) {
-      console.error("EmailJS Error:", err);
+    } catch (error: any) {
+      setErrorMsg(error?.message || "Unable to send your message right now.");
+    } finally {
       setIsSubmitting(false);
-      setErrorMsg(
-        err?.text || err?.message || "Delivery failed. Verify your service and template IDs inside your project configuration."
-      );
     }
   };
 
   return (
     <section id="contact" className="py-24 px-6 max-w-7xl mx-auto relative z-10">
       <div className="grid md:grid-cols-2 gap-12 md:gap-16">
-        
         {/* Info Column */}
         <div className="flex flex-col justify-center">
           <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6">
@@ -78,7 +72,6 @@ export default function Contact() {
           </p>
 
           <div className="space-y-6 mb-10">
-            {/* Email card */}
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-400">
                 <Mail className="w-6 h-6" />
@@ -87,7 +80,7 @@ export default function Contact() {
                 <p className="text-[10px] uppercase tracking-widest text-slate-400 font-semibold font-mono">
                   Email
                 </p>
-                <a 
+                <a
                   href={`mailto:${PORTFOLIO_OWNER.email}`}
                   id="contact-email-link"
                   className="text-white hover:text-indigo-400 transition-colors text-lg"
@@ -97,7 +90,6 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Location card */}
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400">
                 <MapPin className="w-6 h-6" />
@@ -106,39 +98,13 @@ export default function Contact() {
                 <p className="text-[10px] uppercase tracking-widest text-slate-400 font-semibold font-mono">
                   Location
                 </p>
-                <p className="text-white text-lg">
-                  {PORTFOLIO_OWNER.location}
-                </p>
+                <p className="text-white text-lg">{PORTFOLIO_OWNER.location}</p>
               </div>
             </div>
-
-            {/* YouTube card */}
-            {PORTFOLIO_OWNER.youtube && (
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500">
-                  <Youtube className="w-6 h-6" />
-                </div>
-                <div>
-                  <p className="text-[10px] uppercase tracking-widest text-slate-400 font-semibold font-mono">
-                    YouTube Channel
-                  </p>
-                  <a 
-                    href={PORTFOLIO_OWNER.youtube}
-                    target="_blank"
-                    rel="noreferrer"
-                    id="contact-youtube"
-                    className="text-white hover:text-red-500 transition-colors text-lg inline-flex items-center gap-1.5 font-medium"
-                  >
-                    @AbuTaherSiddikiAdnan
-                  </a>
-                </div>
-              </div>
-            )}
           </div>
 
-          {/* Social icons */}
           <div className="flex gap-4">
-            <a 
+            <a
               href={PORTFOLIO_OWNER.linkedin}
               target="_blank"
               rel="noreferrer"
@@ -148,7 +114,7 @@ export default function Contact() {
             >
               <Linkedin className="w-5 h-5" />
             </a>
-            <a 
+            <a
               href={PORTFOLIO_OWNER.github}
               target="_blank"
               rel="noreferrer"
@@ -158,7 +124,7 @@ export default function Contact() {
             >
               <Github className="w-5 h-5" />
             </a>
-            <a 
+            <a
               href={PORTFOLIO_OWNER.youtube}
               target="_blank"
               rel="noreferrer"
@@ -168,7 +134,7 @@ export default function Contact() {
             >
               <Youtube className="w-5 h-5" />
             </a>
-            <a 
+            <a
               href={(PORTFOLIO_OWNER as any).facebook}
               target="_blank"
               rel="noreferrer"
@@ -181,7 +147,6 @@ export default function Contact() {
           </div>
         </div>
 
-        {/* Form Column */}
         <div className="glass-card bg-slate-900/60 border border-slate-800 p-8 rounded-[24px] relative overflow-hidden">
           {submitted ? (
             <div className="flex flex-col items-center justify-center py-12 text-center animate-fade-in">
@@ -195,22 +160,24 @@ export default function Contact() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {errorMsg && (
                 <div className="p-4 bg-amber-500/10 border border-amber-500/25 text-amber-200 text-xs rounded-xl font-mono leading-relaxed shadow-sm">
-                  <strong className="block text-amber-400 font-semibold mb-1 uppercase tracking-wider text-[10px]">Configuration Required</strong>
+                  <strong className="block text-amber-400 font-semibold mb-1 uppercase tracking-wider text-[10px]">Submission Error</strong>
                   {errorMsg}
                 </div>
               )}
+
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs uppercase tracking-wider text-slate-400 font-semibold font-mono block ml-1">
                     Name
                   </label>
-                  <input 
+                  <input
                     type="text"
-                    required
                     id="contact-name"
+                    name="name"
+                    required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="John Doe"
+                    placeholder="Your Name"
                     className="w-full bg-[#020617] border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none rounded-xl px-4 py-3 text-white text-sm transition-all"
                   />
                 </div>
@@ -218,13 +185,14 @@ export default function Contact() {
                   <label className="text-xs uppercase tracking-wider text-slate-400 font-semibold font-mono block ml-1">
                     Email
                   </label>
-                  <input 
+                  <input
                     type="email"
-                    required
                     id="contact-email"
+                    name="email"
+                    required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="john@example.com"
+                    placeholder="youremail@example.com"
                     className="w-full bg-[#020617] border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 focus:outline-none rounded-xl px-4 py-3 text-white text-sm transition-all"
                   />
                 </div>
@@ -234,9 +202,10 @@ export default function Contact() {
                 <label className="text-xs uppercase tracking-wider text-slate-400 font-semibold font-mono block ml-1">
                   Subject
                 </label>
-                <input 
+                <input
                   type="text"
                   id="contact-subject"
+                  name="subject"
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   placeholder="Project Inquiry"
@@ -248,10 +217,11 @@ export default function Contact() {
                 <label className="text-xs uppercase tracking-wider text-slate-400 font-semibold font-mono block ml-1">
                   Message
                 </label>
-                <textarea 
+                <textarea
                   rows={4}
-                  required
                   id="contact-message"
+                  name="message"
+                  required
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Tell me about your project..."
@@ -259,7 +229,7 @@ export default function Contact() {
                 />
               </div>
 
-              <button 
+              <button
                 type="submit"
                 id="contact-submit-btn"
                 disabled={isSubmitting}
@@ -270,7 +240,6 @@ export default function Contact() {
             </form>
           )}
         </div>
-
       </div>
     </section>
   );

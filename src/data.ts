@@ -2,7 +2,7 @@ import { Project, Skill } from "./types";
 
 export const PORTFOLIO_OWNER = {
   name: "Abu Taher Siddiki Adnan",
-  tagline: "AI Engineer & CSE Student",
+  tagline: "AI/ML Enthusiast & Flutter Developer",
   subTitle: "Undergraduate CSE student at IIUC, Bangladesh. Engineering intelligent systems, advanced algorithm research, and premium cross-platform Flutter applications.",
   email: "abutahersiddikiadnan@gmail.com",
   personalEmail: "abutahersiddikiadnan@gmail.com",
@@ -12,7 +12,7 @@ export const PORTFOLIO_OWNER = {
   linkedin: "https://www.linkedin.com/in/abu-taher-siddiki-adnan/",
   facebook: "https://www.facebook.com/adnan.siddik.282",
   youtube: "https://www.youtube.com/@AbuTaherSiddikiAdnan",
-  portraitUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBRbAa2I0HyG7etnKgdJj8f2Vihdq3OoKxIuhziWRcYGPg-IPDYVSC1NWa-tNV8DbfFsYDLktwGjMKARYHLjkRHmXQ5F1fTfCss1pZVJHJVsX1wrC4eZZAFF5180I3ex6693QhPpaN4oiy1qy2E96Kki5mgUZwkMLa14MmbIOZDthPZFwjE6NYQGrA-dZAbPFXQHjOlxOTxEtwKSVbsiRLVwBkbSEh6v4Fr0NO-7F1ed-kHuOnb1eDKUjoY5JAQ4RZGMEzQW8b16Bty"
+  portraitUrl: "/images/myPic.png"
 };
 
 export const PROJECTS_DATA: Project[] = [
@@ -22,7 +22,8 @@ export const PROJECTS_DATA: Project[] = [
     description: "A real-time cross-platform blood donor matching mobile application featuring location tracking and high-priority urgent requests.",
     tags: ["Flutter", "Firebase", "Real-time"],
     category: "mobile",
-    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan"
+    image: "/images/blood_hub.png",
+    websiteUrl: "https://blood-hub-bd.vercel.app/"
   },
   {
     id: "knot-note",
@@ -30,7 +31,9 @@ export const PROJECTS_DATA: Project[] = [
     description: "Real-time cloud-based note-taking application using Firebase Firestore, dynamic queries, and user authentication secure protocols.",
     tags: ["Flutter", "Firebase", "Firestore"],
     category: "mobile",
-    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan"
+    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan/Knot",
+    image: "/images/Knot.png",
+    downloadUrl: "https://github.com/Abu-Taher-Siddiki-Adnan/Knot/releases/tag/v1.0.0"
   },
   {
     id: "zendo-task",
@@ -38,33 +41,30 @@ export const PROJECTS_DATA: Project[] = [
     description: "Local task and productivity utility incorporating custom SQLite databases and background notification schedulers.",
     tags: ["Flutter", "SQLite", "Notifications"],
     category: "mobile",
-    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan"
+    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan/ZenDo",
+    image: "/images/Zendo.png",
+    videoUrl: "https://www.youtube.com/watch?v=jfyld2fvy88",
+    downloadUrl: "https://github.com/Abu-Taher-Siddiki-Adnan/ZenDo/releases/tag/v1.1.0"
   },
   {
-    id: "personality-quiz",
-    title: "Personality Quiz App",
-    description: "An engaging mobile quiz environment evaluating behavioral queries with custom score tallies and profile summaries.",
-    tags: ["Flutter", "Dart"],
-    category: "mobile",
-    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan"
-  },
-  {
-    id: "student-management",
-    title: "Student Management System",
-    description: "Full CRUD educational management system featuring real-time stats and student records. Ranked 5th in a programming/system design competition.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCXyg13NcBI4QcHL3S5E5HWLC2xfMzER91GG6RKgZk23OdTp6LIbe5s2VZ6EKSxTmTlIxTNJkFkEP7CN4eOWjZrlBRKnDW5dJef1nqHrHyjYk5e8JO1uviJ1jMVqnS5GOdCtqMOCndoeK93WQqcXweBwRCiwBW0Svp9q3EwuFpOMZP7u9wjp6FMBeRTNj91HdlU3UMm7tbICSNZPW35eACHCOs1O9pXdsyqEnss1xCWnzi-9ybgQ9mFuBPk5-C8HHRj0HeaRce74iuZ",
-    tags: ["Django", "Python", "CRUD"],
-    category: "web",
-    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan"
+    id: "medical-insurance-predictor",
+    title: "Medical Insurance Cost Predictor",
+    description: "A machine learning model that predicts estimated medical insurance costs based on personal and lifestyle factors such as age, BMI, smoking status, and region — trained on real-world insurance data using scikit-learn.",
+    tags: ["Python", "Machine Learning", "scikit-learn"],
+    category: "ml",
+    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan/Medical_Insurance_Predictor",
+    image: "/images/medical_insurance.png",
+    demoUrl:"https://huggingface.co/spaces/Adnan282/Medical-Insurance-Predictor"
   },
   {
     id: "techbazar",
     title: "E-commerce Platform (TechBazar)",
     description: "A full-featured digital storefront with integrated SSLCommerz payment gateway. Ranked 4th in a high-profile web development competition.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC-kcOkrllOUYDoS4h_N-LKVJ-sgZSnpohiSzrjJ2MBcprefqix-naa2cmlhSWlQKdR8gojJQnwIbYpXJfD0A0x5UbjTazxtyq9zJsiSAybYPuHuSIeYlx7kOrG05B3Lx0tv04d9mcqnNb8fkove57qy1lNRobEBWQsRoLVdzLOEGqyxCriXQ4Z9tqEYuSNglPO_xt4khBE9XjYOt2KL4H-wq87oAfav6Ks2e6dldpKOA6vlJ2cGhKDVd98q6fPIUHg0U4m3E6meglR",
+    image: "/images/tech.png",
     tags: ["Django", "SSLCommerz", "Python"],
     category: "web",
-    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan"
+    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan/TechBazar",
+    videoUrl: "https://youtu.be/-buVQigLGCo?si=hu-rIeuPmXizkvfz&t=242"
   },
   {
     id: "library-manager",
@@ -72,16 +72,72 @@ export const PROJECTS_DATA: Project[] = [
     description: "His first Django implementation exploring database normalization, backend system design principles, and automated inventory flows.",
     tags: ["Django", "Python", "Database"],
     category: "web",
-    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan"
+    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan/Library_Management_System",
+    image: "/images/library.png",
+    videoUrl:"https://www.youtube.com/watch?v=lyYiYlb2n_Q"
+  },
+  {
+    id: "online-learning-platform",
+    title: "Online Learning Platform",
+    description: "A React-based educational platform developed as a course assignment for the Tools curriculum, featuring interactive lessons and a responsive dashboard.",
+    tags: ["React", "JavaScript", "Web"],
+    category: "web",
+    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan/Online_Learning_Platform",
+    image: "/images/olp.png",
+    demoUrl:"https://learnify-omega-eight.vercel.app/"
+  },
+  {
+    id: "shopease-bd",
+    title: "ShopEase BD",
+    description: "An assignment project built for the Tools & Technologies course, with an emphasis on responsive e-commerce layout and product browsing.",
+    tags: ["HTML", "CSS", "JavaScript"],
+    category: "web",
+    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan/ShopEase_BD",
+    image: "/images/shopease_bd.png",
+    demoUrl: "https://abu-taher-siddiki-adnan.github.io/ShopEase_BD/"
+  },
+  {
+    id: "student-management-system",
+    title: "Student Management System",
+    description: "A Python-driven student management tool built to streamline academic records, attendance tracking, and user workflows.",
+    tags: ["Python", "Django", "Education"],
+    category: "web",
+    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan/Student_Management_System",
+    image: "/images/student.png",
+    videoUrl:"https://www.youtube.com/watch?v=-buVQigLGCo&t=98s"
   },
   {
     id: "polish-calculator",
     title: "Polish Notation Calculator",
     description: "Algorithm-focused, mathematical calculator prioritizing clean data structures and expression evaluation workflows.",
     tags: ["Python", "Algorithms", "Data Structures"],
-    category: "desktop",
-    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan"
-  }
+    category: "web",
+    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan/Calculator",
+    image: "/images/calc.png",
+    demoUrl:"https://calculator-opal-two-60.vercel.app/",
+    videoUrl:"https://www.youtube.com/watch?v=d0XZmHHVIoo"
+  },
+  {
+    id: "smart-shop",
+    title: "Smart Shop",
+    description: "A collaborative Tools course project for shop management featuring clean UI design and customer-facing storefront flows.",
+    tags: ["HTML", "CSS", "JavaScript"],
+    category: "web",
+    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan/Smart_Shop",
+    image: "/images/smartshop.png"
+  },
+  {
+    id: "personality-quiz-flutter-app",
+    title: "Personality Quiz Flutter App",
+    description: "A first Flutter project delivering an interactive quiz experience, result analysis, and beautifully animated mobile screens.",
+    tags: ["Flutter", "Dart", "Mobile"],
+    category: "mobile",
+    githubUrl: "https://github.com/Abu-Taher-Siddiki-Adnan/Personality_Quiz_Flutter_App",
+    image: "/images/personality.jpg",
+    downloadUrl:"https://github.com/Abu-Taher-Siddiki-Adnan/Personality_Quiz_Flutter_App/releases/tag/v1.0.0",
+    videoUrl:"https://www.youtube.com/watch?v=2F92xFSqIXM&t=61s",
+
+  },
 ];
 
 export const SKILLS_DATA: Skill[] = [

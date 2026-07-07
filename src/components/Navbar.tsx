@@ -30,7 +30,7 @@ export default function Navbar({ activeSection }: NavbarProps) {
             id="nav-logo"
             className="text-xl font-bold tracking-tight text-white font-sans uppercase"
           >
-            {PORTFOLIO_OWNER.name}<span className="text-indigo-400">.IO</span>
+            Adnan
           </a>
         </div>
 
@@ -54,13 +54,6 @@ export default function Navbar({ activeSection }: NavbarProps) {
                 </a>
               );
             })}
-          </div>
-
-          <div className="w-px h-6 bg-slate-800"></div>
-
-          {/* System Performance Status */}
-          <div className="px-3.5 py-1.5 bg-slate-900 rounded-md text-[10px] font-mono border border-slate-800 text-indigo-400 tracking-wider">
-            STABLE // 64 FPS
           </div>
 
         </div>

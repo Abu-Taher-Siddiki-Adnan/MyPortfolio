@@ -95,7 +95,7 @@ export default function Hero() {
             <div className="absolute -inset-4 bg-gradient-to-tr from-indigo-500 to-purple-600 rounded-[34px] blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
             
             {/* The Main Portrait Card with Geometric Slate Border */}
-            <div className="relative aspect-[3/4] bg-slate-900 rounded-[30px] overflow-hidden border border-slate-800 shadow-2xl">
+            <div className="relative aspect-[5/6] bg-slate-900 rounded-[30px] overflow-hidden border border-slate-800 shadow-2xl">
               <img 
                 src={PORTFOLIO_OWNER.portraitUrl}
                 referrerPolicy="no-referrer"
