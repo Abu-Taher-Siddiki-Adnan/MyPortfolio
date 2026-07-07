@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Theme color mappings aligned with Geometric Balance (Indigo + Slate) */
+  --color-primary: #6366f1; /* Indigo-500 */
+  --color-secondary: #818cf8; /* Indigo-400 */
+  --color-tertiary: #a855f7; /* Purple-500 */
+  --color-background: #0f172a; /* Deep Slate bg-[#0F172A] */
+  --color-surface: #0f172a;
+  --color-surface-container: #0f172a;
+  --color-surface-container-high: #1e293b; /* Slate-800 */
+  --color-surface-container-low: #0f172a;
+  --color-surface-container-lowest: #020617; /* Slate-950 */
+  
+  --color-on-background: #f1f5f9; /* Slate-100 */
+  --color-on-surface: #f1f5f9;
+  --color-on-surface-variant: #94a3b8; /* Slate-400 */
+  --color-outline: #334155; /* Slate-700 */
+  --color-outline-variant: #1e293b; /* Slate-800 */
+}
+
+@layer base {
+  body {
+    background-color: #0f172a;
+    background-image: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #0f172a 70%);
+    color: #f1f5f9;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+  }
+
+  /* Shimmer button style matching Geometric theme */
+  .shimmer-btn {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shimmer-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.1) 50%, transparent 75%);
+    transform: rotate(45deg);
+    transition: 0.5s;
+    opacity: 0;
+  }
+  
+  .shimmer-btn:hover::after {
+    left: 100%;
+    opacity: 1;
+  }
+
+  /* Geometric Balanced Cards */
+  .glass-card {
+    background-color: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(51, 65, 85, 0.5); /* Slate-700 border */
+    border-radius: 24px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .glass-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(99, 102, 241, 0.4); /* Indigo glow */
+    box-shadow: 0 12px 30px rgba(99, 102, 241, 0.1);
+  }
+
+  .geometric-diamond {
+    width: 32px;
+    height: 32px;
+    background-color: #6366f1;
+    border-radius: 4px;
+    transform: rotate(45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .geometric-diamond-inner {
+    width: 14px;
+    height: 14px;
+    background-color: #0f172a;
+    border-radius: 50%;
+  }
+
+  .floating-circle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -1;
+    opacity: 0.15;
+    animation: float 25s infinite alternate ease-in-out;
+  }
+
+  @keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(60px, 30px) scale(1.1); }
+  }
+
+  .glow-text {
+    text-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
+  }
+}

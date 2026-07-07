@@ -1,0 +1,6 @@
+{
+  "name": "Adnan - Digital Alchemist Portfolio",
+  "description": "An interactive portfolio for Adnan, a software engineer specializing in scalable backend architectures and mobile apps. Features an AI Assistant powered by Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
